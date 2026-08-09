@@ -1,0 +1,38 @@
+# =============================================================================
+# MODELE « CI VenaLabs » — convention D-099 / D-101
+# =============================================================================
+# Les PR se verifient sur les runners auto-heberges de l'organisation
+# (labels `venalabs-ci`, minutes gratuites) ; tout le reste — la branche par
+# defaut, les schedules, les dispatch — reste sur `ubuntu-latest` : ce qui
+# garde la production ne depend pas d'une machine a nous.
+#
+# A ADAPTER a la stack du depot : remplacer l'etape finale par les vrais
+# lint/build/tests. Regles completes :
+# VenaLabs-Officiel/venalabs-ia -> docs/handoff-runners-ci.md §8.
+# ⚠️ Ne pas dimensionner le parallelisme des tests sur les CPU "vus" : les
+# machines sont PARTAGEES (plafonner les workers, cf. §8.3).
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [$default-branch]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","venalabs-ci"]') || 'ubuntu-latest' }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: A remplacer par la vraie verification
+        run: |
+          echo "Adapter ce modele : lint + build + tests de la stack du depot."
+          exit 1  # un modele non adapte ne doit pas rendre un faux vert
