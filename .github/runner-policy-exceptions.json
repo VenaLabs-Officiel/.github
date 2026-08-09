@@ -1,0 +1,20 @@
+{
+  "exceptions": [
+    {
+      "repository": "VenaLabs-Officiel/venalabs-ia",
+      "workflow": "runners.yml",
+      "job": "veille",
+      "allow_github_hosted": true,
+      "reason": "La veille doit rester externe pour constater une panne totale du pool auto-hébergé.",
+      "expires": "2027-08-09"
+    },
+    {
+      "repository": "VenaLabs-Officiel/demo-repository",
+      "workflow": "auto-assign.yml",
+      "job": "run",
+      "allow_write_permissions": ["issues", "pull-requests"],
+      "reason": "L'automatisation doit assigner les nouvelles issues et pull requests.",
+      "expires": "2027-08-09"
+    }
+  ]
+}

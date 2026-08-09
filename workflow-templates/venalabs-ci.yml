@@ -1,10 +1,8 @@
 # =============================================================================
 # MODELE « CI VenaLabs » — convention D-099 / D-101
 # =============================================================================
-# Les PR se verifient sur les runners auto-heberges de l'organisation
-# (labels `venalabs-ci`, minutes gratuites) ; tout le reste — la branche par
-# defaut, les schedules, les dispatch — reste sur `ubuntu-latest` : ce qui
-# garde la production ne depend pas d'une machine a nous.
+# Tous les evenements se verifient sur les runners auto-heberges de
+# l'organisation (labels `venalabs-ci`, sans minutes GitHub).
 #
 # A ADAPTER a la stack du depot : remplacer l'etape finale par les vrais
 # lint/build/tests. Regles completes :
@@ -28,10 +26,10 @@ permissions:
 
 jobs:
   verifier:
-    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","venalabs-ci"]') || 'ubuntu-latest' }}
+    runs-on: [self-hosted, venalabs-ci]
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: A remplacer par la vraie verification
         run: |
           echo "Adapter ce modele : lint + build + tests de la stack du depot."
