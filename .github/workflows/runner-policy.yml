@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: VenaLabs-Officiel/.github
-          ref: main
+          ref: ${{ github.repository == 'VenaLabs-Officiel/.github' && github.head_ref || 'main' }}
           path: policy
 
       - name: Refuser les runners payants et les actions flottantes
