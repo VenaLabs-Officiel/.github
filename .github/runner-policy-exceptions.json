@@ -9,6 +9,14 @@
       "expires": "2027-08-09"
     },
     {
+      "repository": "VenaLabs-Officiel/venalabs-ia",
+      "workflow": "ci.yml",
+      "job": "reports",
+      "allow_github_hosted": true,
+      "reason": "Le flux KEV de la CISA renvoie HTTP 403 aux IP Hetzner et dependency-check doit conserver cet analyseur.",
+      "expires": "2027-02-09"
+    },
+    {
       "repository": "VenaLabs-Officiel/demo-repository",
       "workflow": "auto-assign.yml",
       "job": "run",
