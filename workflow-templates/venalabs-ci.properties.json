@@ -1,5 +1,5 @@
 {
   "name": "CI VenaLabs",
-  "description": "PR vérifiées sur les runners auto-hébergés venalabs-ci (D-099/D-101) ; branche par défaut chez GitHub.",
+  "description": "CI entièrement exécutée sur les runners auto-hébergés venalabs-ci (D-099/D-101).",
   "categories": ["ci"]
 }

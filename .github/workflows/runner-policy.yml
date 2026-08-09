@@ -1,0 +1,39 @@
+name: VenaLabs runner policy
+
+on:
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runner-policy:
+    name: VenaLabs runner policy
+    runs-on: [self-hosted, venalabs-ci]
+    timeout-minutes: 5
+    steps:
+      - name: Lire les workflows du dépôt contrôlé
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: target
+
+      - name: Lire la politique centrale
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: VenaLabs-Officiel/.github
+          ref: ${{ github.repository == 'VenaLabs-Officiel/.github' && github.head_ref || 'main' }}
+          path: policy
+
+      - name: Refuser les runners payants et les actions flottantes
+        env:
+          TARGET_REPOSITORY: ${{ github.repository }}
+        run: >-
+          python3 policy/.github/scripts/check_runner_policy.py
+          --repository "$TARGET_REPOSITORY"
+          --workflows target/.github/workflows
+          --exceptions policy/.github/runner-policy-exceptions.json
+
+      - name: Auto-tests de la politique centrale
+        run: python3 policy/.github/scripts/test_check_runner_policy.py
