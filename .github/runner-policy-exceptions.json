@@ -10,6 +10,14 @@
     },
     {
       "repository": "VenaLabs-Officiel/venalabs-ia",
+      "workflow": "nightly.yml",
+      "job": "dispatch",
+      "allow_github_hosted": true,
+      "reason": "L'ordonnanceur externe suit la vague nocturne jusqu'à 120 minutes sans immobiliser un créneau du pool auto-hébergé qu'il doit précisément observer.",
+      "expires": "2027-08-09"
+    },
+    {
+      "repository": "VenaLabs-Officiel/venalabs-ia",
       "workflow": "ci.yml",
       "job": "reports",
       "allow_github_hosted": true,
