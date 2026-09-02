@@ -6,7 +6,7 @@
 #
 # A ADAPTER a la stack du depot : remplacer l'etape finale par les vrais
 # lint/build/tests. Regles completes :
-# VenaLabs-Officiel/venalabs-ia -> docs/handoff-runners-ci.md §8.
+# VenaLabs-Officiel/venalabs-ia -> infra/ci-runners.md.
 # ⚠️ Ne pas dimensionner le parallelisme des tests sur les CPU "vus" : les
 # machines sont PARTAGEES (plafonner les workers, cf. §8.3).
 name: CI
@@ -26,6 +26,7 @@ permissions:
 
 jobs:
   verifier:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: [self-hosted, venalabs-ci]
     timeout-minutes: 20
     steps:

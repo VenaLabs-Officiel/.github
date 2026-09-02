@@ -10,7 +10,7 @@ import re
 import sys
 from pathlib import Path
 
-HOSTED_RE = re.compile(r"\b(?:ubuntu|windows|macos)-(?:latest|[0-9][A-Za-z0-9.-]*)\b")
+HOSTED_RE = re.compile(r"\b(?:ubuntu|windows|macos)-(?:latest|slim|[0-9][A-Za-z0-9.-]*)\b")
 REMOTE_ACTION_RE = re.compile(r"^([^\s#]+/[^\s#]+)@([^\s#]+)")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 WRITE_RE = re.compile(r"^\s{4,}([A-Za-z0-9_-]+):\s*write\s*(?:#.*)?$")
