@@ -4,6 +4,11 @@ Tous les workflows des dépôts privés utilisent par défaut
 `[self-hosted, venalabs-ci]`. Les actions distantes sont épinglées par SHA et les
 permissions d'écriture sont refusées sauf besoin explicite.
 
+Les tests, builds, migrations et scans restent sur ce pool partagé. Les seuls jobs
+d'orchestration sans calcul applicatif peuvent utiliser `ubuntu-slim` avec une
+exception nominative et datée. Cette voie évite qu'un agrégateur de quelques secondes
+attende derrière une suite lourde et conserve l'indépendance des veilles du pool.
+
 Les exceptions sont centralisées dans
 `.github/runner-policy-exceptions.json`. Chacune nomme le dépôt, le workflow,
 le job, sa justification et sa date d'expiration. Une exception expirée fait

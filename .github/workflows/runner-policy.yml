@@ -11,7 +11,8 @@ permissions:
 jobs:
   runner-policy:
     name: VenaLabs runner policy
-    runs-on: [self-hosted, venalabs-ci]
+    # Contrôle d'orchestration court et indépendant du pool qu'il audite.
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
       - name: Lire les workflows du dépôt contrôlé

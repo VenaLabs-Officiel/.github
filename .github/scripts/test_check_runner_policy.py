@@ -40,6 +40,19 @@ class RunnerPolicyTest(unittest.TestCase):
         )
         self.assertEqual([], errors)
 
+    def test_scoped_exception_allows_ubuntu_slim(self) -> None:
+        errors = self.scan(
+            "jobs:\n  veille:\n    runs-on: ubuntu-slim\n    steps:\n      - run: true\n",
+            [{"workflow": "ci.yml", "job": "veille", "allow_github_hosted": True}],
+        )
+        self.assertEqual([], errors)
+
+    def test_rejects_ubuntu_slim_without_exception(self) -> None:
+        errors = self.scan(
+            "jobs:\n  veille:\n    runs-on: ubuntu-slim\n    steps:\n      - run: true\n"
+        )
+        self.assertEqual(["ci.yml:3: runner GitHub-hosted interdit"], errors)
+
 
 if __name__ == "__main__":
     unittest.main()

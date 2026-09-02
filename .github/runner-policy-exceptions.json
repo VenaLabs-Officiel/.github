@@ -5,6 +5,7 @@
       "workflow": "runners.yml",
       "job": "veille",
       "allow_github_hosted": true,
+      "allow_write_permissions": ["issues"],
       "reason": "La veille doit rester externe pour constater une panne totale du pool auto-hébergé.",
       "expires": "2027-08-09"
     },
@@ -29,8 +30,49 @@
       "workflow": "pr-governance.yml",
       "job": "governance",
       "allow_github_hosted": true,
-      "reason": "Contrat de PR : job d'environ 20 s, API GitHub uniquement ; le pool venalabs-ci (4 créneaux) est saturé par la matrice e2e précisément quand ce check requis doit être rapporté vite (exception délibérée D-139).",
+      "reason": "Contrat de PR : job d'environ 20 s, API GitHub uniquement ; le pool venalabs-ci (6 créneaux) peut être occupé par la matrice e2e précisément quand ce check requis doit être rapporté vite (exception délibérée D-139).",
       "expires": "2027-08-09"
+    },
+    {
+      "repository": "VenaLabs-Officiel/.github",
+      "workflow": "runner-policy.yml",
+      "job": "runner-policy",
+      "allow_github_hosted": true,
+      "reason": "La politique centrale est un contrôle Python court et doit rester indépendante du pool qu'elle audite.",
+      "expires": "2027-09-02"
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "ci.yml",
+      "job": "validated",
+      "allow_github_hosted": true,
+      "reason": "Agrégateur de statut sans calcul applicatif : il ne doit pas reprendre un créneau après les tests.",
+      "expires": "2027-09-02"
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "pr-base-sentinelle.yml",
+      "job": "base",
+      "allow_github_hosted": true,
+      "reason": "Contrôle court de métadonnées de PR, sans dépendance aux machines de CI.",
+      "expires": "2027-09-02"
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "pr-autosync.yml",
+      "job": "autosync",
+      "allow_github_hosted": true,
+      "reason": "Automatisation GitHub courte qui ne compile ni ne teste le produit.",
+      "expires": "2027-09-02"
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "runners.yml",
+      "job": "veille",
+      "allow_github_hosted": true,
+      "allow_write_permissions": ["issues"],
+      "reason": "La veille externe doit pouvoir constater et signaler la panne des deux runners de déploiement.",
+      "expires": "2027-09-02"
     },
     {
       "repository": "VenaLabs-Officiel/venalabs-ia",
