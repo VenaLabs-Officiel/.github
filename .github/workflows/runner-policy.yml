@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: VenaLabs-Officiel/.github
-          ref: ${{ github.repository == 'VenaLabs-Officiel/.github' && github.sha || 'POLICY_REVISION' }}
+          ref: ${{ github.repository == 'VenaLabs-Officiel/.github' && github.sha || '910f30456918f43b306a63697b49601551bf771c' }}
           path: policy
           persist-credentials: false
 
