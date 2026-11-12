@@ -4,6 +4,7 @@ on:
   pull_request:
   merge_group:
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -19,15 +20,23 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           path: target
+          persist-credentials: false
 
       - name: Lire la politique centrale
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: VenaLabs-Officiel/.github
-          ref: ${{ github.repository == 'VenaLabs-Officiel/.github' && github.head_ref || 'main' }}
+          ref: ${{ github.repository == 'VenaLabs-Officiel/.github' && github.sha || '910f30456918f43b306a63697b49601551bf771c' }}
           path: policy
+          persist-credentials: false
 
-      - name: Refuser les runners payants et les actions flottantes
+      - name: Installer le parseur YAML vérifié
+        run: |
+          python3 -m venv "$RUNNER_TEMP/runner-policy-venv"
+          "$RUNNER_TEMP/runner-policy-venv/bin/pip" install --disable-pip-version-check --require-hashes -r policy/.github/requirements-policy.txt
+          echo "$RUNNER_TEMP/runner-policy-venv/bin" >> "$GITHUB_PATH"
+
+      - name: Vérifier les placements autorisés, permissions et références
         env:
           TARGET_REPOSITORY: ${{ github.repository }}
         run: >-

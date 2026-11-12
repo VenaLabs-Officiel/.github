@@ -1,94 +1,265 @@
 {
   "exceptions": [
     {
+      "repository": "VenaLabs-Officiel/.github",
+      "workflow": "runner-policy.yml",
+      "job": "runner-policy",
+      "reason": "Contrôle YAML court, indépendant des hôtes audités ; dépôt public.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ]
+    },
+    {
       "repository": "VenaLabs-Officiel/venalabs-ia",
       "workflow": "runners.yml",
-      "job": "veille",
-      "allow_github_hosted": true,
-      "allow_write_permissions": ["issues"],
-      "reason": "La veille doit rester externe pour constater une panne totale du pool auto-hébergé.",
-      "expires": "2027-08-09"
+      "job": "bilan",
+      "reason": "Agrégation sans attente après les six canaris ; alertes externes SMTP.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ]
     },
     {
       "repository": "VenaLabs-Officiel/venalabs-ia",
       "workflow": "nightly.yml",
       "job": "dispatch",
-      "allow_github_hosted": true,
-      "reason": "L'ordonnanceur externe suit la vague nocturne jusqu'à 120 minutes sans immobiliser un créneau du pool auto-hébergé qu'il doit précisément observer.",
-      "expires": "2027-08-09"
+      "reason": "Dispatch court puis découverte du run exact, sans attendre sa fin.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ],
+      "allow_write_permissions": [
+        "actions"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/venalabs-ia",
+      "workflow": "nightly.yml",
+      "job": "bilan",
+      "reason": "Lit le verdict terminé via workflow_run et tient le suivi applicatif existant.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ],
+      "allow_write_permissions": [
+        "issues"
+      ]
     },
     {
       "repository": "VenaLabs-Officiel/venalabs-ia",
       "workflow": "ci.yml",
       "job": "reports",
-      "allow_github_hosted": true,
-      "reason": "Le flux KEV de la CISA renvoie HTTP 403 aux IP Hetzner et dependency-check doit conserver cet analyseur.",
-      "expires": "2027-02-09"
+      "reason": "Audit npm court et sans compilation, placement existant D-099 ; quota inclus et dépassement bloqué.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-latest"
+      ]
     },
     {
       "repository": "VenaLabs-Officiel/venalabs-ia",
       "workflow": "pr-governance.yml",
       "job": "governance",
-      "allow_github_hosted": true,
-      "reason": "Contrat de PR : job d'environ 20 s, API GitHub uniquement ; le pool venalabs-ci (6 créneaux) peut être occupé par la matrice e2e précisément quand ce check requis doit être rapporté vite (exception délibérée D-139).",
-      "expires": "2027-08-09"
-    },
-    {
-      "repository": "VenaLabs-Officiel/.github",
-      "workflow": "runner-policy.yml",
-      "job": "runner-policy",
-      "allow_github_hosted": true,
-      "reason": "La politique centrale est un contrôle Python court et doit rester indépendante du pool qu'elle audite.",
-      "expires": "2027-09-02"
-    },
-    {
-      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
-      "workflow": "ci.yml",
-      "job": "validated",
-      "allow_github_hosted": true,
-      "reason": "Agrégateur de statut sans calcul applicatif : il ne doit pas reprendre un créneau après les tests.",
-      "expires": "2027-09-02"
-    },
-    {
-      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
-      "workflow": "pr-base-sentinelle.yml",
-      "job": "base",
-      "allow_github_hosted": true,
-      "reason": "Contrôle court de métadonnées de PR, sans dépendance aux machines de CI.",
-      "expires": "2027-09-02"
-    },
-    {
-      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
-      "workflow": "pr-autosync.yml",
-      "job": "autosync",
-      "allow_github_hosted": true,
-      "reason": "Automatisation GitHub courte qui ne compile ni ne teste le produit.",
-      "expires": "2027-09-02"
-    },
-    {
-      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
-      "workflow": "runners.yml",
-      "job": "veille",
-      "allow_github_hosted": true,
-      "allow_write_permissions": ["issues"],
-      "reason": "La veille externe doit pouvoir constater et signaler la panne des deux runners de déploiement.",
-      "expires": "2027-09-02"
+      "reason": "Validation des métadonnées de PR indépendante du pool saturé.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ]
     },
     {
       "repository": "VenaLabs-Officiel/venalabs-ia",
       "workflow": "issue-lifecycle.yml",
       "job": "close-linked-issues",
-      "allow_github_hosted": true,
-      "reason": "Fermeture des issues liées à la fusion : job court, API GitHub uniquement, même famille que pr-governance (D-139) ; ne doit pas dépendre du pool auto-hébergé.",
-      "expires": "2027-08-09"
+      "reason": "Suivi de fusion et incidents de gouvernance, API GitHub uniquement.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ],
+      "allow_write_permissions": [
+        "issues"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/venalabs-ia",
+      "workflow": "issue-lifecycle.yml",
+      "job": "garde-fou",
+      "reason": "Suivi de fusion et incidents de gouvernance, API GitHub uniquement.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ],
+      "allow_write_permissions": [
+        "issues"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "activate-environment.yml",
+      "job": "staging",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "activate-environment.yml",
+      "job": "production",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "bootstrap.yml",
+      "job": "bootstrap-staging",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "bootstrap.yml",
+      "job": "bootstrap-prod",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "control-timer.yml",
+      "job": "control",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "cover-financial-income.yml",
+      "job": "coverage",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "deploy-prod.yml",
+      "job": "deploy",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "deploy-staging.yml",
+      "job": "deploy",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "expose-prod.yml",
+      "job": "caddy",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "migrate.yml",
+      "job": "migrate-staging",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "migrate.yml",
+      "job": "migrate-prod",
+      "reason": "Décision Marvin 12/11/2026 : opérations avec secrets sur VM éphémère, quota inclus, dépassement à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "pr-autosync.yml",
+      "job": "autosync",
+      "reason": "Automatisation courte de PR ; aucun calcul applicatif.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/Outil-pilotage-VenaLabs-Finance",
+      "workflow": "pr-base-sentinelle.yml",
+      "job": "base",
+      "reason": "Automatisation courte de PR ; aucun calcul applicatif.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ],
+      "allow_write_permissions": [
+        "pull-requests"
+      ]
     },
     {
       "repository": "VenaLabs-Officiel/demo-repository",
       "workflow": "auto-assign.yml",
       "job": "run",
-      "allow_write_permissions": ["issues", "pull-requests"],
-      "reason": "L'automatisation doit assigner les nouvelles issues et pull requests.",
-      "expires": "2027-08-09"
+      "reason": "Assignation de métadonnées par API GitHub, sans compilation ni checkout de PR.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "ubuntu-slim"
+      ],
+      "allow_write_permissions": [
+        "issues",
+        "pull-requests"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/venalabs-ia-mobile",
+      "workflow": "ios.yml",
+      "job": "xcode",
+      "reason": "Build natif Xcode sur le Mac existant de Marvin, sans VM macOS payante.",
+      "expires": "2027-05-12",
+      "allowed_self_hosted_labels": [
+        "self-hosted",
+        "macOS",
+        "venalabs-ios"
+      ]
+    },
+    {
+      "repository": "VenaLabs-Officiel/venalabs-crypto-mobile",
+      "workflow": "mobile.yml",
+      "job": "ios",
+      "reason": "Build Xcode natif existant, impossible sur Linux ; quota inclus uniquement, dépassement bloqué à 0 $.",
+      "expires": "2027-05-12",
+      "allowed_hosted_labels": [
+        "macos-15"
+      ]
     }
   ]
 }
